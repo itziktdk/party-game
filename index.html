@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>🔥 מי הזוג הכי חם? 🔥</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:#0a0a1a;color:#fff;min-height:100vh;overflow-x:hidden;position:relative}
+.confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.confetti span{position:absolute;width:8px;height:8px;border-radius:50%;animation:fall linear infinite;opacity:.7}
+@keyframes fall{0%{transform:translateY(-10vh) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.screen{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;position:relative;z-index:1;text-align:center}
+.screen.active{display:flex}
+h1{font-size:2.2em;margin-bottom:10px;background:linear-gradient(135deg,#ff6b9d,#c44dff,#ffb347);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:none}
+h2{font-size:1.4em;color:#c9a0ff;margin-bottom:20px}
+.subtitle{color:#aaa;font-size:1em;margin:15px 0;line-height:1.6}
+input[type="text"]{background:rgba(255,255,255,.1);border:2px solid #c44dff;border-radius:15px;padding:15px 20px;font-size:1.1em;color:#fff;width:100%;max-width:320px;text-align:center;outline:none;direction:rtl;margin:10px 0}
+input::placeholder{color:rgba(255,255,255,.4)}
+input:focus{border-color:#ff6b9d;box-shadow:0 0 20px rgba(255,107,157,.3)}
+.btn{background:linear-gradient(135deg,#ff6b9d,#c44dff);border:none;border-radius:15px;padding:16px 40px;font-size:1.2em;color:#fff;cursor:pointer;margin:10px;transition:all .2s;font-weight:bold;min-width:200px;touch-action:manipulation}
+.btn:hover{transform:scale(1.05);box-shadow:0 0 30px rgba(196,77,255,.5)}
+.btn:active{transform:scale(.97)}
+.btn-secondary{background:linear-gradient(135deg,#2a1a3e,#1a1a3e);border:2px solid #c44dff}
+.btn-small{padding:10px 20px;font-size:.9em;min-width:auto}
+.question-card{background:rgba(255,255,255,.05);border:2px solid rgba(196,77,255,.3);border-radius:20px;padding:30px 20px;max-width:400px;width:100%}
+.question-text{font-size:1.3em;margin-bottom:25px;line-height:1.5;color:#fff}
+.question-num{color:#ff6b9d;font-size:.9em;margin-bottom:10px}
+.answers{display:flex;flex-direction:column;gap:10px;width:100%}
+.answer-btn{background:rgba(255,255,255,.08);border:2px solid rgba(196,77,255,.3);border-radius:12px;padding:14px 18px;font-size:1em;color:#fff;cursor:pointer;transition:all .2s;text-align:right;touch-action:manipulation}
+.answer-btn:hover{background:rgba(196,77,255,.2);border-color:#c44dff}
+.answer-btn.selected{background:rgba(255,107,157,.3);border-color:#ff6b9d;transform:scale(1.02)}
+.progress-bar{width:100%;max-width:400px;height:6px;background:rgba(255,255,255,.1);border-radius:3px;margin-bottom:20px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#ff6b9d,#c44dff);border-radius:3px;transition:width .3s}
+.flame-meter{width:100%;max-width:350px;height:30px;background:rgba(255,255,255,.1);border-radius:15px;overflow:hidden;margin:15px 0;position:relative}
+.flame-fill{height:100%;border-radius:15px;transition:width 1.5s ease-out;background:linear-gradient(90deg,#4a9eff,#ff6b9d,#ff4444,#ff0000)}
+.score-label{font-size:2em;margin:15px 0}
+.result-text{font-size:1.2em;color:#c9a0ff;margin:10px 0;line-height:1.6}
+.loading-screen{display:flex;flex-direction:column;align-items:center;gap:20px}
+.loading-fire{font-size:4em;animation:pulse 0.5s ease-in-out infinite alternate}
+@keyframes pulse{0%{transform:scale(1)}100%{transform:scale(1.2)}}
+.leaderboard{width:100%;max-width:400px}
+.lb-entry{display:flex;align-items:center;gap:10px;padding:12px 15px;background:rgba(255,255,255,.05);border-radius:12px;margin:8px 0;border:1px solid rgba(196,77,255,.2);transition:all .3s}
+.lb-entry.highlight{border-color:#ff6b9d;background:rgba(255,107,157,.15);box-shadow:0 0 15px rgba(255,107,157,.2)}
+.lb-entry:first-child{border-color:#ffd700;background:rgba(255,215,0,.1)}
+.lb-entry.new-entry{animation:slideIn .5s ease-out}
+@keyframes slideIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+.lb-rank{font-size:1.5em;min-width:35px;text-align:center}
+.lb-name{flex:1;font-size:1em;text-align:right}
+.lb-score{font-size:.9em;color:#ff6b9d;min-width:60px;text-align:left}
+.lb-fire{font-size:.8em}
+.crown-msg{color:#ffd700;font-size:1.1em;margin:10px 0;animation:glow 1s ease-in-out infinite alternate}
+@keyframes glow{0%{text-shadow:0 0 5px #ffd700}100%{text-shadow:0 0 20px #ffd700,0 0 40px #ff6b9d}}
+.my-score-display{background:rgba(255,255,255,.05);border:2px solid #c44dff;border-radius:20px;padding:25px;width:100%;max-width:400px;margin:10px 0}
+.live-dot{display:inline-block;width:8px;height:8px;background:#00ff88;border-radius:50%;margin-left:8px;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+</head>
+<body>
+<div class="confetti" id="confetti"></div>
+
+<!-- Screen 1: Welcome -->
+<div class="screen active" id="welcome">
+<h1>🔥 מי הזוג הכי חם? 🔥</h1>
+<h2>משחק זוגות — כל זוג משחק בטלפון שלו</h2>
+<input type="text" id="coupleName" placeholder="שם הזוג (למשל: איציק ונטלי)" autocomplete="off">
+<button class="btn" onclick="startGame()">יאללה! 🔥</button>
+<button class="btn btn-secondary" onclick="goToLeaderboard()" style="margin-top:0">🏆 טבלת הניקוד</button>
+<p class="subtitle">כולם נכנסים → כולם עונים → הזוג הכי חם מנצח! 🏆</p>
+</div>
+
+<!-- Screen 2: Questions -->
+<div class="screen" id="questions">
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="question-card">
+<div class="question-num" id="questionNum"></div>
+<div class="question-text" id="questionText"></div>
+<div class="answers" id="answers"></div>
+</div>
+</div>
+
+<!-- Screen 3: Loading -->
+<div class="screen" id="loading">
+<div class="loading-screen">
+<div class="loading-fire">🔥</div>
+<h2>חישוב מדד החום...</h2>
+<p class="subtitle">מנתחים את רמת הלהט שלכם 🌡️</p>
+</div>
+</div>
+
+<!-- Screen 4: Results -->
+<div class="screen" id="results">
+<h1>התוצאה שלכם!</h1>
+<div class="score-label" id="scoreLabel"></div>
+<div class="flame-meter"><div class="flame-fill" id="flameFill"></div></div>
+<div class="result-text" id="resultText"></div>
+<button class="btn" onclick="goToLeaderboard()">לטבלת הניקוד 📊</button>
+<button class="btn btn-secondary" onclick="copyResult()">📋 העתק תוצאה</button>
+</div>
+
+<!-- Screen 5: Leaderboard -->
+<div class="screen" id="leaderboard">
+<h1>🏆 טבלת הזוגות הכי חמים 🔥</h1>
+<p style="color:#00ff88;font-size:.85em">🔴 LIVE <span class="live-dot"></span></p>
+<div class="my-score-display" id="myScoreDisplay"></div>
+<div class="leaderboard" id="leaderboardList"></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px">
+<button class="btn" onclick="playAgain()">🔥 חזרה למשחק</button>
+<button class="btn btn-secondary btn-small" onclick="copyResult()">📋 העתק תוצאה</button>
+<button class="btn btn-secondary btn-small" onclick="resetAll()">🔄 אפס הכל</button>
+</div>
+</div>
+
+<script>
+const questions=[
+{q:'מה הדבר הראשון שבן/בת הזוג עושה בבוקר? 🌅',a:[{t:'בודק/ת טלפון לפני שפוקחים עיניים 📱',s:2},{t:'קפה. בלי קפה לא מדברים 😤',s:3},{t:'מתחבק/ת ואז קם/ה',s:5},{t:'צועק/ת על הילדים שיקומו',s:2}]},
+{q:'מה הביטוי שהכי חוזר בבית שלכם? 🏠',a:[{t:'מי שם את זה פה?!',s:2},{t:'תעזור/י לי רגע!',s:2},{t:'בוא/י ארגיז אותי פחות',s:3},{t:'יאללה לישון... (ואז לא ישנים 😏)',s:5}]},
+{q:'מה קורה כשאתם נוסעים יחד באוטו? 🚗',a:[{t:'ריב על ניווט ומי נהג יותר טוב 😤',s:2},{t:'רדיו — ומתווכחים על תחנה',s:2},{t:'מנגנים ושרים ביחד 🎵',s:4},{t:'יד על הברך ונהנים מהדרך 😏',s:5}]},
+{q:'מי מכם נרדם ראשון בלילה? 😴',a:[{t:'הוא — 30 שניות ונוחר',s:2},{t:'היא — ואז הוא גונב שמיכה',s:2},{t:'ביחד, כמו תינוקות',s:4},{t:'אף אחד לא ישן מוקדם... 🔥',s:5}]},
+{q:'מה הייתם עושים עם ערב חופשי בלי ילדים? 🌙',a:[{t:'ישנים. פשוט ישנים 😴',s:1},{t:'מסעדה ויין כמו פעם',s:3},{t:'סרט, פופקורן וספה',s:2},{t:'לא צריך לפרט 😈🔥',s:5}]},
+{q:'מה הדבר שלעולם לא תודו בו בקול? 🤫',a:[{t:'שאנחנו אוהבים לריב קצת',s:3},{t:'שאנחנו לובשים את הבגדים של השני',s:2},{t:'שאנחנו עדיין מתרגשים אחד מהשני 🥰',s:5},{t:'שיש לנו סיסמאות לטלפון של השני',s:3}]},
+{q:'מה קורה בסופר כשאתם קונים ביחד? 🛒',a:[{t:'ריב על כל מוצר שנכנס לעגלה',s:2},{t:'הוא נעלם למדף החטיפים 🍫',s:2},{t:'קונים ביחד, צוות מנצח! 💪',s:4},{t:'נגמר בנשיקה בין המדפים 😏',s:5}]},
+{q:'איך בן/בת הזוג מנסה לרצות אתכם? 💝',a:[{t:'מביא/ה אוכל — הדרך ללב דרך הקיבה',s:3},{t:'פתאום עושה מטלות בבית 🧹',s:3},{t:'מגיע/ה עם מתנה הפתעה',s:4},{t:'תנועה מסוימת שעובדת תמיד... 😏',s:5}]},
+{q:'מה קורה כשמישהו שולח הודעה חשודה לבן/בת הזוג? 📱',a:[{t:'חקירה ברמת שב"כ 🔍',s:2},{t:'סומכים לגמרי, אפילו לא שואלים',s:4},{t:'מציצים מהצד בלי שישימו לב 👀',s:3},{t:'לא איכפת, אנחנו בטוחים בקשר 😎',s:5}]},
+{q:'מה עדיף: צודק או שלום בית? ✌️',a:[{t:'צודק. תמיד צודק. 😤',s:1},{t:'שלום בית — לא שווה את הריב',s:3},{t:'שלום בית + להיות צודק בשקט 🤫',s:4},{t:'מי צריך שלום כשיש אש? 🔥😂',s:5}]}
+];
+
+let currentQ=0, totalScore=0, coupleName='', leaderboardInterval=null, lastScoresJSON='';
+
+// Restore name from localStorage
+const saved = localStorage.getItem('partyCoupleName');
+if(saved) document.getElementById('coupleName').value = saved;
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id !== 'leaderboard' && leaderboardInterval){ clearInterval(leaderboardInterval); leaderboardInterval=null; }
+}
+
+function startGame(){
+  const name=document.getElementById('coupleName').value.trim();
+  if(!name){document.getElementById('coupleName').style.borderColor='#ff4444';return}
+  coupleName=name;
+  localStorage.setItem('partyCoupleName', coupleName);
+  currentQ=0;totalScore=0;
+  showScreen('questions');showQuestion();
+}
+
+function showQuestion(){
+  const q=questions[currentQ];
+  document.getElementById('questionNum').textContent=`שאלה ${currentQ+1} מתוך ${questions.length}`;
+  document.getElementById('questionText').textContent=q.q;
+  document.getElementById('progressFill').style.width=((currentQ)/questions.length*100)+'%';
+  const cont=document.getElementById('answers');cont.innerHTML='';
+  q.a.forEach((a,i)=>{
+    const btn=document.createElement('button');btn.className='answer-btn';btn.textContent=a.t;
+    btn.onclick=()=>selectAnswer(i,a.s);cont.appendChild(btn);
+  });
+}
+
+function selectAnswer(idx,score){
+  document.querySelectorAll('.answer-btn').forEach((b,i)=>b.classList.toggle('selected',i===idx));
+  totalScore+=score;currentQ++;
+  setTimeout(()=>{
+    if(currentQ<questions.length){showQuestion()}
+    else{showLoading()}
+  },400);
+}
+
+function showLoading(){
+  showScreen('loading');
+  // Post score to server
+  fetch('/api/score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:coupleName,score:totalScore})})
+    .catch(()=>{});
+  setTimeout(()=>showResults(),3000);
+}
+
+function getScoreText(s){
+  if(s<=15)return'❄️ קרחון! צריך להדליק את האש מחדש...';
+  if(s<=25)return'🌡️ פושרים... יש לכם עוד עבודה!';
+  if(s<=35)return'🔥 חמים! זוג שיודע מה הוא רוצה!';
+  if(s<=45)return'🔥🔥 רותחים! כמעט הזוג הכי חם!';
+  return'🌋 לוהטים! אתם הזוג הכי חם!! 👑';
+}
+
+function getFireEmoji(s){
+  if(s<=15)return'❄️';if(s<=25)return'🌡️';if(s<=35)return'🔥';if(s<=45)return'🔥🔥';return'🌋';
+}
+
+function showResults(){
+  showScreen('results');
+  document.getElementById('scoreLabel').textContent=`${getFireEmoji(totalScore)} ${totalScore}/50`;
+  document.getElementById('resultText').textContent=getScoreText(totalScore);
+  setTimeout(()=>{document.getElementById('flameFill').style.width=(totalScore/50*100)+'%'},100);
+}
+
+function copyResult(){
+  const text=`${coupleName}: ${totalScore}/50 ${getFireEmoji(totalScore)}`;
+  navigator.clipboard.writeText(text).then(()=>alert('הועתק! 📋')).catch(()=>{prompt('העתיקו:',text)});
+}
+
+function goToLeaderboard(){
+  showScreen('leaderboard');
+  renderMyScore();
+  fetchAndRenderLeaderboard();
+  if(leaderboardInterval) clearInterval(leaderboardInterval);
+  leaderboardInterval = setInterval(fetchAndRenderLeaderboard, 3000);
+}
+
+function renderMyScore(){
+  const d=document.getElementById('myScoreDisplay');
+  if(!coupleName || totalScore===0){
+    d.innerHTML='<div style="color:#aaa">שחקו כדי לראות את הניקוד שלכם! 🎮</div>';
+    return;
+  }
+  d.innerHTML=`<div style="font-size:1.3em;margin-bottom:10px">${coupleName}</div>
+<div style="font-size:2em">${getFireEmoji(totalScore)} ${totalScore}/50</div>
+<div class="flame-meter"><div class="flame-fill" style="width:${totalScore/50*100}%"></div></div>
+<div style="color:#c9a0ff;margin-top:10px">${getScoreText(totalScore)}</div>`;
+}
+
+async function fetchAndRenderLeaderboard(){
+  try{
+    const res = await fetch('/api/scores');
+    const scores = await res.json();
+    const newJSON = JSON.stringify(scores);
+    const isNew = newJSON !== lastScoresJSON;
+    lastScoresJSON = newJSON;
+    renderLeaderboard(scores, isNew);
+  }catch(e){ console.error('Failed to fetch scores', e); }
+}
+
+function renderLeaderboard(couples, animate){
+  const medals=['🥇','🥈','🥉'];
+  const list=document.getElementById('leaderboardList');
+  // Remove old crown msg
+  const oldCrown = document.getElementById('crownMsg');
+  if(oldCrown) oldCrown.remove();
+
+  list.innerHTML=couples.map((c,i)=>{
+    const isMe = c.name === coupleName;
+    return`<div class="lb-entry${isMe?' highlight':''}${animate?' new-entry':''}">
+<span class="lb-rank">${medals[i]||i+1}</span>
+<span class="lb-name">${c.name}</span>
+<span class="lb-fire">${getFireEmoji(c.score)}</span>
+<span class="lb-score">${c.score}/50</span>
+</div>`;
+  }).join('');
+
+  if(couples.length && couples[0].name === coupleName){
+    list.insertAdjacentHTML('beforebegin','<div class="crown-msg" id="crownMsg">👑 אתם הזוג הכי חם במסיבה! 🔥</div>');
+  }
+}
+
+function playAgain(){
+  currentQ=0;totalScore=0;showScreen('welcome');
+}
+
+async function resetAll(){
+  if(!confirm('בטוח? זה ימחק את כל הניקודים!')) return;
+  await fetch('/api/reset',{method:'POST'});
+  coupleName='';totalScore=0;currentQ=0;
+  localStorage.removeItem('partyCoupleName');
+  document.getElementById('coupleName').value='';
+  showScreen('welcome');
+}
+
+// Confetti
+(function(){const c=document.getElementById('confetti');const colors=['#ff6b9d','#c44dff','#ffb347','#00d4ff','#ffd700'];
+for(let i=0;i<40;i++){const s=document.createElement('span');s.style.left=Math.random()*100+'%';s.style.background=colors[i%colors.length];s.style.animationDuration=(4+Math.random()*6)+'s';s.style.animationDelay=Math.random()*10+'s';s.style.width=s.style.height=(4+Math.random()*6)+'px';c.appendChild(s)}})();
+</script>
+</body>
+</html>

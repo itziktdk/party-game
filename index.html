@@ -2,235 +2,268 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎉 מי מכיר את מי? — מהדורת זוגות</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>🔥 מי הזוג הכי חם? 🔥</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--pink:#FF1493;--purple:#8B5CF6;--gold:#FFD700;--cyan:#06B6D4;--dark:#0a0a1a}
-body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--dark);color:#fff;min-height:100vh;overflow-x:hidden;direction:rtl}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:#0a0a1a;color:#fff;min-height:100vh;overflow-x:hidden;position:relative}
 .confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
-.confetti span{position:absolute;width:10px;height:10px;border-radius:50%;animation:fall linear infinite;opacity:0.7}
+.confetti span{position:absolute;width:8px;height:8px;border-radius:50%;animation:fall linear infinite;opacity:.7}
 @keyframes fall{0%{transform:translateY(-10vh) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
-.confetti span:nth-child(1){left:10%;background:var(--pink);animation-duration:4s;animation-delay:0s;width:8px;height:8px}
-.confetti span:nth-child(2){left:25%;background:var(--gold);animation-duration:5s;animation-delay:1s;width:12px;height:12px}
-.confetti span:nth-child(3){left:40%;background:var(--cyan);animation-duration:4.5s;animation-delay:0.5s}
-.confetti span:nth-child(4){left:55%;background:var(--purple);animation-duration:5.5s;animation-delay:2s;width:7px;height:7px}
-.confetti span:nth-child(5){left:70%;background:var(--pink);animation-duration:4.2s;animation-delay:1.5s;width:11px;height:11px}
-.confetti span:nth-child(6){left:85%;background:var(--gold);animation-duration:4.8s;animation-delay:0.8s;width:9px;height:9px}
-.confetti span:nth-child(7){left:15%;background:var(--cyan);animation-duration:5.2s;animation-delay:2.5s;width:6px;height:6px;border-radius:2px}
-.confetti span:nth-child(8){left:50%;background:var(--purple);animation-duration:3.8s;animation-delay:0.3s;width:13px;height:13px;border-radius:2px}
-.confetti span:nth-child(9){left:75%;background:var(--gold);animation-duration:4.6s;animation-delay:1.8s;border-radius:2px}
-.confetti span:nth-child(10){left:35%;background:var(--pink);animation-duration:5.1s;animation-delay:3s;width:8px;height:8px;border-radius:2px}
-
-.screen{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;position:relative;z-index:1;animation:fadeIn 0.4s ease}
+.screen{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:20px;position:relative;z-index:1;text-align:center}
 .screen.active{display:flex}
-@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-h1{font-size:2rem;text-align:center;margin-bottom:10px;background:linear-gradient(135deg,var(--pink),var(--purple),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.4}
-h2{font-size:1.5rem;text-align:center;margin-bottom:15px;color:var(--cyan)}
-.subtitle{color:#aaa;font-size:1.1rem;margin-bottom:30px;text-align:center}
-
-input[type=text]{background:rgba(255,255,255,0.1);border:2px solid var(--purple);border-radius:16px;padding:16px 20px;font-size:1.2rem;color:#fff;text-align:center;width:100%;max-width:350px;margin-bottom:20px;outline:none;transition:border-color 0.3s}
-input[type=text]:focus{border-color:var(--pink)}
-input::placeholder{color:rgba(255,255,255,0.4)}
-
-.btn{border:none;border-radius:16px;padding:16px 32px;font-size:1.2rem;font-weight:bold;cursor:pointer;transition:all 0.2s;color:#fff;display:inline-flex;align-items:center;gap:8px;text-align:center;justify-content:center}
-.btn:active{transform:scale(0.95)}
-.btn-pink{background:linear-gradient(135deg,var(--pink),#ff6bb5)}
-.btn-purple{background:linear-gradient(135deg,var(--purple),#a78bfa)}
-.btn-gold{background:linear-gradient(135deg,#f59e0b,var(--gold))}
-.btn-cyan{background:linear-gradient(135deg,var(--cyan),#22d3ee)}
-.btn-green{background:linear-gradient(135deg,#10b981,#34d399)}
-.btn-red{background:linear-gradient(135deg,#ef4444,#f87171)}
-.btn-gray{background:rgba(255,255,255,0.15)}
-.btn-big{padding:20px 40px;font-size:1.4rem;width:100%;max-width:350px}
-
-.party-emojis{font-size:2rem;margin-top:30px;animation:bounce 2s infinite}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-
-.score-display{background:rgba(255,255,255,0.08);border-radius:20px;padding:15px 30px;margin:15px 0;text-align:center;font-size:1.3rem;border:1px solid rgba(255,255,255,0.1)}
-.score-num{font-size:2rem;font-weight:bold;background:linear-gradient(135deg,var(--gold),#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-
-.cards{display:flex;flex-direction:column;gap:15px;width:100%;max-width:400px;margin:20px 0}
-.card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:20px;cursor:pointer;transition:all 0.2s;text-align:center}
-.card:active{transform:scale(0.97)}
-.card:nth-child(1){border-color:rgba(255,20,147,0.4)}
-.card:nth-child(2){border-color:rgba(139,92,246,0.4)}
-.card:nth-child(3){border-color:rgba(6,182,212,0.4)}
-.card:nth-child(4){border-color:rgba(255,215,0,0.4)}
-.card-emoji{font-size:2.5rem;margin-bottom:8px}
-.card-title{font-size:1.2rem;font-weight:bold;margin-bottom:5px}
-.card-desc{font-size:0.85rem;color:#aaa}
-.card-pts{font-size:0.8rem;color:var(--gold);margin-top:5px}
-
-.instructions{background:rgba(255,255,255,0.06);border-radius:16px;padding:20px;margin:15px 0;text-align:center;font-size:1rem;line-height:1.6;max-width:400px;width:100%}
-
-.question-box{background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(255,20,147,0.2));border-radius:20px;padding:30px 20px;text-align:center;font-size:1.4rem;line-height:1.6;max-width:400px;width:100%;margin:20px 0;min-height:120px;display:flex;align-items:center;justify-content:center}
-
-.word-box{background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,20,147,0.2));border-radius:24px;padding:40px 20px;text-align:center;font-size:2rem;font-weight:bold;max-width:400px;width:100%;margin:20px 0;min-height:140px;display:flex;align-items:center;justify-content:center}
-
-.timer{font-size:4rem;font-weight:bold;margin:20px 0;transition:color 0.3s}
-.timer.warning{color:#ef4444;animation:pulse 0.5s infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-
-.btn-row{display:flex;gap:12px;margin:15px 0;flex-wrap:wrap;justify-content:center}
-
-.examples{text-align:center;color:#ccc;font-size:1rem;line-height:2;margin:15px 0}
-
-.result-score{font-size:5rem;font-weight:bold;background:linear-gradient(135deg,var(--gold),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:20px 0}
-.result-msg{font-size:1.5rem;margin:15px 0;text-align:center}
-
-.back-btn{position:fixed;top:15px;right:15px;z-index:10;background:rgba(255,255,255,0.1);border:none;color:#fff;font-size:1.5rem;width:44px;height:44px;border-radius:50%;cursor:pointer;display:none;align-items:center;justify-content:center}
-.back-btn.visible{display:flex}
-
-.q-counter{color:var(--cyan);font-size:0.9rem;margin-bottom:10px}
+h1{font-size:2.2em;margin-bottom:10px;background:linear-gradient(135deg,#ff6b9d,#c44dff,#ffb347);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:none}
+h2{font-size:1.4em;color:#c9a0ff;margin-bottom:20px}
+.subtitle{color:#aaa;font-size:1em;margin:15px 0;line-height:1.6}
+input[type="text"],input[type="number"]{background:rgba(255,255,255,.1);border:2px solid #c44dff;border-radius:15px;padding:15px 20px;font-size:1.1em;color:#fff;width:100%;max-width:320px;text-align:center;outline:none;direction:rtl;margin:10px 0}
+input::placeholder{color:rgba(255,255,255,.4)}
+input:focus{border-color:#ff6b9d;box-shadow:0 0 20px rgba(255,107,157,.3)}
+.btn{background:linear-gradient(135deg,#ff6b9d,#c44dff);border:none;border-radius:15px;padding:16px 40px;font-size:1.2em;color:#fff;cursor:pointer;margin:10px;transition:all .2s;font-weight:bold;min-width:200px;touch-action:manipulation}
+.btn:hover{transform:scale(1.05);box-shadow:0 0 30px rgba(196,77,255,.5)}
+.btn:active{transform:scale(.97)}
+.btn-secondary{background:linear-gradient(135deg,#2a1a3e,#1a1a3e);border:2px solid #c44dff}
+.btn-small{padding:10px 20px;font-size:.9em;min-width:auto}
+.question-card{background:rgba(255,255,255,.05);border:2px solid rgba(196,77,255,.3);border-radius:20px;padding:30px 20px;max-width:400px;width:100%}
+.question-text{font-size:1.3em;margin-bottom:25px;line-height:1.5;color:#fff}
+.question-num{color:#ff6b9d;font-size:.9em;margin-bottom:10px}
+.answers{display:flex;flex-direction:column;gap:10px;width:100%}
+.answer-btn{background:rgba(255,255,255,.08);border:2px solid rgba(196,77,255,.3);border-radius:12px;padding:14px 18px;font-size:1em;color:#fff;cursor:pointer;transition:all .2s;text-align:right;touch-action:manipulation}
+.answer-btn:hover{background:rgba(196,77,255,.2);border-color:#c44dff}
+.answer-btn.selected{background:rgba(255,107,157,.3);border-color:#ff6b9d;transform:scale(1.02)}
+.progress-bar{width:100%;max-width:400px;height:6px;background:rgba(255,255,255,.1);border-radius:3px;margin-bottom:20px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#ff6b9d,#c44dff);border-radius:3px;transition:width .3s}
+.flame-meter{width:100%;max-width:350px;height:30px;background:rgba(255,255,255,.1);border-radius:15px;overflow:hidden;margin:15px 0;position:relative}
+.flame-fill{height:100%;border-radius:15px;transition:width 1.5s ease-out;background:linear-gradient(90deg,#4a9eff,#ff6b9d,#ff4444,#ff0000)}
+.score-label{font-size:2em;margin:15px 0}
+.result-text{font-size:1.2em;color:#c9a0ff;margin:10px 0;line-height:1.6}
+.loading-screen{display:flex;flex-direction:column;align-items:center;gap:20px}
+.loading-fire{font-size:4em;animation:pulse 0.5s ease-in-out infinite alternate}
+@keyframes pulse{0%{transform:scale(1)}100%{transform:scale(1.2)}}
+.tabs{display:flex;gap:0;margin:15px 0;border-radius:12px;overflow:hidden;border:2px solid #c44dff}
+.tab{padding:12px 20px;cursor:pointer;background:rgba(255,255,255,.05);color:#aaa;font-size:.95em;transition:all .2s;flex:1;text-align:center}
+.tab.active{background:linear-gradient(135deg,#ff6b9d,#c44dff);color:#fff}
+.leaderboard{width:100%;max-width:400px}
+.lb-entry{display:flex;align-items:center;gap:10px;padding:12px 15px;background:rgba(255,255,255,.05);border-radius:12px;margin:8px 0;border:1px solid rgba(196,77,255,.2)}
+.lb-entry:first-child{border-color:#ffd700;background:rgba(255,215,0,.1)}
+.lb-rank{font-size:1.5em;min-width:35px;text-align:center}
+.lb-name{flex:1;font-size:1em;text-align:right}
+.lb-score{font-size:.9em;color:#ff6b9d;min-width:60px;text-align:left}
+.lb-fire{font-size:.8em}
+.add-couple-form{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:15px 0;width:100%;max-width:400px}
+.add-couple-form input{flex:1;min-width:100px;max-width:none;margin:0}
+.crown-msg{color:#ffd700;font-size:1.1em;margin:10px 0;animation:glow 1s ease-in-out infinite alternate}
+@keyframes glow{0%{text-shadow:0 0 5px #ffd700}100%{text-shadow:0 0 20px #ffd700,0 0 40px #ff6b9d}}
+.my-score-display{background:rgba(255,255,255,.05);border:2px solid #c44dff;border-radius:20px;padding:25px;width:100%;max-width:400px;margin:10px 0}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
-<div class="confetti"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-<button class="back-btn" id="backBtn" onclick="goHub()">✕</button>
+<div class="confetti" id="confetti"></div>
 
-<!-- Welcome -->
+<!-- Screen 1: Welcome -->
 <div class="screen active" id="welcome">
-<h1>🎉 מי מכיר את מי?<br>— מהדורת זוגות 🔥</h1>
-<p class="subtitle">משחק חברה לזוגות • מפעיל אחד מנהל 🎤</p>
-<input type="text" id="nameInput" placeholder="שם הזוג שלכם (למשל: איציק ונטלי)">
-<button class="btn btn-pink btn-big" onclick="startGame()">בואו נשחק! 🎮</button>
-<div class="instructions" style="margin-top:20px;font-size:0.9rem">
-📱 מפעיל אחד פותח את הלינק<br>
-🎤 מציג שאלות לכל הזוגות<br>
-✅ לוחץ "תואם" / "לא תואם" לכל זוג<br>
-🏆 בסוף — מי שצבר הכי הרבה ניצח!
-</div>
-<div class="party-emojis">🥂 💃 🕺 🎊 🍾 🔥</div>
+<h1>🔥 מי הזוג הכי חם? 🔥</h1>
+<h2>משחק זוגות — כל זוג משחק בטלפון שלו</h2>
+<input type="text" id="coupleName" placeholder="שם הזוג (למשל: איציק ונטלי)" autocomplete="off">
+<button class="btn" onclick="startGame()">יאללה! 🔥</button>
+<p class="subtitle">כולם נכנסים → כולם עונים → הזוג הכי חם מנצח! 🏆</p>
 </div>
 
-<!-- Hub -->
-<div class="screen" id="hub">
-<h2 id="hubGreeting"></h2>
-<div class="score-display">ניקוד: <span class="score-num" id="hubScore">0</span></div>
-<div class="cards">
-<div class="card" onclick="startRound(1)"><div class="card-emoji">🫣</div><div class="card-title">מה הם היו אומרים?</div><div class="card-desc">קראו שאלה — הזוג עונה ביחד — תואם?</div><div class="card-pts">עד 18 נקודות</div></div>
-<div class="card" onclick="startRound(2)"><div class="card-emoji">🗣️</div><div class="card-title">תגיד בלי לגעת!</div><div class="card-desc">הסבירו מילה בלי להגיד אותה</div><div class="card-pts">עד 12 נקודות</div></div>
-<div class="card" onclick="startRound(3)"><div class="card-emoji">🤥</div><div class="card-title">אמת או שקר זוגי</div><div class="card-desc">2 אמיתות ושקר אחד — מצאו!</div><div class="card-pts">2 נקודות לניחוש</div></div>
-<div class="card" onclick="startRound(4)"><div class="card-emoji">🗳️</div><div class="card-title">הצבעת הקהל</div><div class="card-desc">כולם מצביעים — זה אתם?</div><div class="card-pts">עד 15 נקודות</div></div>
+<!-- Screen 2: Questions -->
+<div class="screen" id="questions">
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="question-card">
+<div class="question-num" id="questionNum"></div>
+<div class="question-text" id="questionText"></div>
+<div class="answers" id="answers"></div>
 </div>
-<button class="btn btn-gold" onclick="showScore()">🏆 תוצאות</button>
 </div>
 
-<!-- Round 1 -->
-<div class="screen" id="round1">
-<h2>🫣 מה הם היו אומרים?</h2>
-<div class="instructions">🎤 קראו את השאלה בקול לכל הזוגות!<br>כל זוג עונה ביחד — אם שניהם ענו אותו דבר = תואם! 🎯</div>
-<div class="q-counter" id="r1counter"></div>
-<div class="question-box" id="r1question"></div>
-<div class="btn-row">
-<button class="btn btn-green" onclick="r1Answer(true)">תואם! ✅</button>
-<button class="btn btn-red" onclick="r1Answer(false)">לא תואם ❌</button>
+<!-- Screen 3: Loading -->
+<div class="screen" id="loading">
+<div class="loading-screen">
+<div class="loading-fire">🔥</div>
+<h2>חישוב מדד החום...</h2>
+<p class="subtitle">מנתחים את רמת הלהט שלכם 🌡️</p>
 </div>
-<div class="score-display">ניקוד: <span class="score-num" id="r1score">0</span></div>
-<button class="btn btn-gray" onclick="goHub()">סיימנו! ←</button>
 </div>
 
-<!-- Round 2 -->
-<div class="screen" id="round2">
-<h2>🗣️ תגיד בלי לגעת!</h2>
-<div class="instructions">מקבלים מילה ומסבירים בלי להגיד אותה!<br>30 שניות ⏱️</div>
-<div class="q-counter" id="r2counter"></div>
-<div class="word-box" id="r2word"></div>
-<div class="timer" id="r2timer">30</div>
-<div id="r2startArea"><button class="btn btn-cyan btn-big" onclick="r2Start()">התחל ⏱️</button></div>
-<div id="r2answerArea" style="display:none">
-<div class="btn-row">
-<button class="btn btn-green" onclick="r2Answer(true)">ניחשו! ✅</button>
-<button class="btn btn-red" onclick="r2Answer(false)">לא ניחשו ❌</button>
-</div>
-</div>
-<div class="score-display">ניקוד: <span class="score-num" id="r2score">0</span></div>
-<button class="btn btn-gray" onclick="goHub()">סיימנו! ←</button>
+<!-- Screen 4: Results -->
+<div class="screen" id="results">
+<h1>התוצאה שלכם!</h1>
+<div class="score-label" id="scoreLabel"></div>
+<div class="flame-meter"><div class="flame-fill" id="flameFill"></div></div>
+<div class="result-text" id="resultText"></div>
+<button class="btn" onclick="goToLeaderboard()">לטבלת הניקוד 📊</button>
+<button class="btn btn-secondary" onclick="copyResult()">📋 העתק תוצאה</button>
 </div>
 
-<!-- Round 3 -->
-<div class="screen" id="round3">
-<h2>🤥 אמת או שקר זוגי</h2>
-<div class="instructions">כל זוג מספר 3 דברים — 2 אמת ו-1 שקר.<br>נחשו מה השקר! 🕵️</div>
-<div class="examples">
-💡 דוגמאות:<br>
-"פעם ריבנו 3 ימים בגלל ___"<br>
-"עשינו את זה ב-___"<br>
-"הוא/היא ישנ/ה עם ___"
+<!-- Screen 5: Leaderboard -->
+<div class="screen" id="leaderboard">
+<h1>🏆 טבלת הזוגות הכי חמים 🔥</h1>
+<div class="tabs">
+<div class="tab active" onclick="switchTab('my')">הניקוד שלי</div>
+<div class="tab" onclick="switchTab('full')">טבלה מלאה</div>
 </div>
-<div class="btn-row">
-<button class="btn btn-green" onclick="r3Answer(true)">ניחשנו נכון! ✅</button>
-<button class="btn btn-red" onclick="r3Answer(false)">טעינו ❌</button>
+<div id="tabMy">
+<div class="my-score-display" id="myScoreDisplay"></div>
+<p class="subtitle">הראו את המסך לכולם! 📱</p>
+<button class="btn btn-secondary btn-small" onclick="copyResult()">📋 העתק תוצאה</button>
 </div>
-<div class="score-display">ניקוד: <span class="score-num" id="r3score">0</span></div>
-<button class="btn btn-gray" onclick="goHub()">סיימנו! ←</button>
+<div id="tabFull" class="hidden">
+<div class="add-couple-form">
+<input type="text" id="addName" placeholder="שם הזוג">
+<input type="number" id="addScore" placeholder="ניקוד" min="0" max="50" style="max-width:80px">
+<button class="btn btn-small" onclick="addCouple()">➕</button>
 </div>
-
-<!-- Round 4 -->
-<div class="screen" id="round4">
-<h2>🗳️ הצבעת הקהל</h2>
-<div class="instructions">כולם מצביעים ביחד.<br>הזוג שנבחר = 3 נקודות!</div>
-<div class="q-counter" id="r4counter"></div>
-<div class="question-box" id="r4question"></div>
-<div class="btn-row">
-<button class="btn btn-green" onclick="r4Answer(true)">זה אנחנו! 🙋</button>
-<button class="btn btn-gray" onclick="r4Answer(false)">לא אנחנו</button>
+<div class="leaderboard" id="leaderboardList"></div>
 </div>
-<div class="score-display">ניקוד: <span class="score-num" id="r4score">0</span></div>
-<button class="btn btn-gray" onclick="goHub()">סיימנו! ←</button>
-</div>
-
-<!-- Scoreboard -->
-<div class="screen" id="scoreboard">
-<h1>🏆 תוצאות!</h1>
-<div class="result-score" id="finalScore">0</div>
-<div class="result-msg" id="finalMsg"></div>
-<button class="btn btn-pink btn-big" onclick="resetGame()">שחק שוב 🔄</button>
-<button class="btn btn-gray" style="margin-top:10px" onclick="goHub()">חזרה ←</button>
+<button class="btn btn-secondary" onclick="resetGame()" style="margin-top:20px">חזרה להתחלה 🔄</button>
 </div>
 
 <script>
-let score=0, name='', r1idx=0, r2idx=0, r4idx=0, timerInterval=null;
+const questions=[
+{q:'כמה פעמים בשבוע אתם...? 😏',a:[{t:'בחלומות 😴',s:1},{t:'פעם, אם יש מצב רוח',s:2},{t:'2-3, כמו שצריך 💪',s:4},{t:'כל יום, אנחנו חיות 🔥',s:5}]},
+{q:'מי שוטף כלים בבית?',a:[{t:'הוא — ורק אחרי שצועקים עליו 😤',s:2},{t:'היא — כי הוא "לא רואה" אותם',s:2},{t:'ביחד! (כן, באמת)',s:5},{t:'יש מדיח, מה אנחנו פראיירים?',s:3}]},
+{q:'מה עשיתם בדייט האחרון?',a:[{t:'מה זה דייט? 🤔',s:1},{t:'נטפליקס על הספה (קלאסי)',s:2},{t:'יצאנו למסעדה כמו בני אדם',s:4},{t:'דברים שלא מספרים בפגישות הורים 😈',s:5}]},
+{q:'כמה זמן לוקח לכם ריב ממוצע?',a:[{t:'אנחנו עדיין באמצע ריב מלפני שבוע',s:1},{t:'יום-יומיים של שקט עוין 🥶',s:2},{t:'כמה שעות ומתפייסים',s:4},{t:'חמש דקות ואז... מתפייסים 😏',s:5}]},
+{q:'מה הסוד לזוגיות מוצלחת?',a:[{t:'לא לדבר יותר מדי 🤐',s:1},{t:'ארוחות טובות וסדרות',s:2},{t:'הומור ואקשן 😂🔥',s:4},{t:'אין סוד, פשוט שורדים 💀',s:3}]},
+{q:'איפה המקום הכי מוזר שעשיתם...? 🙈',a:[{t:'רק במיטה, אנחנו שמרנים',s:1},{t:'בסלון אחרי שהילדים נרדמו',s:3},{t:'במכונית / חוף / מלון',s:4},{t:'אם נספר, נעצרו אותנו 👮',s:5}]},
+{q:'מה קורה כשאחד מכם אומר "כאב ראש"?',a:[{t:'אז כאב לו/לה ראש, מה... 🤷',s:1},{t:'יודעים שזה קוד ל"לא בא לי"',s:3},{t:'עיסוי ראש ואז... 💆😏',s:5},{t:'לא קיים, תמיד בא לנו',s:5}]},
+{q:'כמה פעמים ביום אתם שולחים הודעות אחד לשני?',a:[{t:'רק "קנה חלב" ו"מתי בבית"',s:1},{t:'כמה פעמים, הרגיל',s:2},{t:'כל הזמן, גם אמוג\'ים לבביים ❤️',s:4},{t:'שולחים דברים שמוחקים מיד 🫣',s:5}]},
+{q:'מי שולט בשלט הטלוויזיה?',a:[{t:'הוא — ולא מוותר 😤',s:2},{t:'היא — כי יש לה טעם יותר טוב',s:2},{t:'מתחלפים כמו בני אדם',s:3},{t:'אין לנו זמן לטלוויזיה... 😈',s:5}]},
+{q:'אם הייתם יכולים לשנות דבר אחד בבן/בת הזוג?',a:[{t:'הנחירות. בבקשה. 😩',s:2},{t:'שיעזור/תעזור יותר בבית!',s:2},{t:'שום דבר, הם מושלמים (חייבים להגיד את זה כי הם ליד) 😇',s:3},{t:'דבר אחד?! יש לי רשימה! 📝',s:4}]}
+];
 
-const r1questions=["מי מכם נרדם ראשון אחרי...? 😏","מה הדבר שבן/בת הזוג הכי מתלונן/ת עליו בבית?","מה התירוץ הכי שכיח ל'לא הערב'?","אם בן/בת הזוג היה מתאר אותך ב-3 מילים — מה?","מה עבודת הבית שבן הזוג טוען שהוא עושה... אבל לא באמת?","איפה המקום הכי מוזר ש...? 🙈"];
-const r2words=["ויאגרה 💊","שואב אבק","חותנת 😱","סדין 🛏️","ווטסאפ של האקס","כאב ראש","ארון הבגדים שלו","תנוחת הכוכב ⭐","רק 5 דקות","חשבון משותף 💳","אמבטיה ביחד 🛁","אני לא רעב (אוכל מהצלחת)"];
-const r4questions=["🔥 איזה זוג הכי סביר שהתווכח בדרך לפה?","😏 איזה זוג הכי סביר שיעלם ראשון לחדר?","🧹 באיזה בית הכי מלוכלך עכשיו?","📱 מי הכי סביר שבודק את הטלפון של בן הזוג?","👶 מי עוד לא סיים ריב מהשבוע?"];
-let r2shuffled=[];
+let currentQ=0,totalScore=0,coupleName='';
 
-function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.getElementById('backBtn').classList.toggle('visible',id!=='welcome'&&id!=='hub'&&id!=='scoreboard')}
-function save(){localStorage.setItem('pg',JSON.stringify({score,name}))}
-function load(){try{let d=JSON.parse(localStorage.getItem('pg'));if(d){score=d.score||0;name=d.name||''}}catch(e){}}
-function updateScores(){document.getElementById('hubScore').textContent=score;document.getElementById('r1score').textContent=score;document.getElementById('r2score').textContent=score;document.getElementById('r3score').textContent=score;document.getElementById('r4score').textContent=score;save()}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
 
-function startGame(){let n=document.getElementById('nameInput').value.trim();if(!n){document.getElementById('nameInput').style.borderColor='#ef4444';return}name=n;save();goHub()}
-function goHub(){clearInterval(timerInterval);document.getElementById('hubGreeting').textContent='שלום '+name+'! 🎉';updateScores();show('hub');document.getElementById('backBtn').classList.remove('visible')}
-
-function startRound(r){
-if(r===1){r1idx=0;showR1()}
-else if(r===2){r2idx=0;r2shuffled=shuffle(r2words);showR2()}
-else if(r===3){show('round3');updateScores()}
-else if(r===4){r4idx=0;showR4()}
+function startGame(){
+const name=document.getElementById('coupleName').value.trim();
+if(!name){document.getElementById('coupleName').style.borderColor='#ff4444';return}
+coupleName=name;currentQ=0;totalScore=0;
+showScreen('questions');showQuestion()
 }
 
-function showR1(){if(r1idx>=r1questions.length){goHub();return}document.getElementById('r1counter').textContent='שאלה '+(r1idx+1)+' מתוך '+r1questions.length;document.getElementById('r1question').textContent=r1questions[r1idx];show('round1');updateScores()}
-function r1Answer(match){if(match)score+=3;r1idx++;if(r1idx<r1questions.length)showR1();else{updateScores();goHub()}}
+function showQuestion(){
+const q=questions[currentQ];
+document.getElementById('questionNum').textContent=`שאלה ${currentQ+1} מתוך ${questions.length}`;
+document.getElementById('questionText').textContent=q.q;
+document.getElementById('progressFill').style.width=((currentQ)/questions.length*100)+'%';
+const cont=document.getElementById('answers');cont.innerHTML='';
+q.a.forEach((a,i)=>{
+const btn=document.createElement('button');btn.className='answer-btn';btn.textContent=a.t;
+btn.onclick=()=>selectAnswer(i,a.s);cont.appendChild(btn)
+})
+}
 
-function showR2(){if(r2idx>=r2shuffled.length){goHub();return}document.getElementById('r2counter').textContent='מילה '+(r2idx+1)+' מתוך '+r2shuffled.length;document.getElementById('r2word').textContent=r2shuffled[r2idx];document.getElementById('r2timer').textContent='30';document.getElementById('r2timer').className='timer';document.getElementById('r2startArea').style.display='';document.getElementById('r2answerArea').style.display='none';show('round2');updateScores()}
-function r2Start(){clearInterval(timerInterval);let t=30;document.getElementById('r2startArea').style.display='none';document.getElementById('r2timer').textContent=t;timerInterval=setInterval(()=>{t--;document.getElementById('r2timer').textContent=t;if(t<=10)document.getElementById('r2timer').className='timer warning';if(t<=0){clearInterval(timerInterval);document.getElementById('r2answerArea').style.display=''}},1000)}
-function r2Answer(ok){clearInterval(timerInterval);if(ok)score+=1;r2idx++;if(r2idx<r2shuffled.length)showR2();else{updateScores();goHub()}}
+function selectAnswer(idx,score){
+document.querySelectorAll('.answer-btn').forEach((b,i)=>b.classList.toggle('selected',i===idx));
+totalScore+=score;currentQ++;
+setTimeout(()=>{
+if(currentQ<questions.length){showQuestion()}
+else{showLoading()}
+},400)
+}
 
-function r3Answer(ok){if(ok)score+=2;updateScores()}
+function showLoading(){
+showScreen('loading');
+setTimeout(()=>showResults(),3000)
+}
 
-function showR4(){if(r4idx>=r4questions.length){goHub();return}document.getElementById('r4counter').textContent='שאלה '+(r4idx+1)+' מתוך '+r4questions.length;document.getElementById('r4question').textContent=r4questions[r4idx];show('round4');updateScores()}
-function r4Answer(ok){if(ok)score+=3;r4idx++;if(r4idx<r4questions.length)showR4();else{updateScores();goHub()}}
+function getScoreText(s){
+if(s<=15)return'❄️ קרחון! צריך להדליק את האש מחדש...';
+if(s<=25)return'🌡️ פושרים... יש לכם עוד עבודה!';
+if(s<=35)return'🔥 חמים! זוג שיודע מה הוא רוצה!';
+if(s<=45)return'🔥🔥 רותחים! כמעט הזוג הכי חם!';
+return'🌋 לוהטים! אתם הזוג הכי חם!! 👑'
+}
 
-function showScore(){let el=document.getElementById('finalScore');el.textContent=score;let msg='';if(score<=10)msg='אתם בכלל מכירים? 😂';else if(score<=20)msg='יש פוטנציאל! 💪';else if(score<=30)msg='זוג על! 🔥';else msg='מכירים אחד את השני בעיניים עצומות! 👑';document.getElementById('finalMsg').textContent=msg;show('scoreboard')}
-function resetGame(){score=0;save();goHub()}
+function getFireEmoji(s){
+if(s<=15)return'❄️';if(s<=25)return'🌡️';if(s<=35)return'🔥';if(s<=45)return'🔥🔥';return'🌋'
+}
 
-load();if(name){document.getElementById('nameInput').value=name;goHub()}
+function showResults(){
+showScreen('results');
+document.getElementById('scoreLabel').textContent=`${getFireEmoji(totalScore)} ${totalScore}/50`;
+document.getElementById('resultText').textContent=getScoreText(totalScore);
+setTimeout(()=>{document.getElementById('flameFill').style.width=(totalScore/50*100)+'%'},100);
+localStorage.setItem('hotCouple',JSON.stringify({name:coupleName,score:totalScore}))
+}
+
+function copyResult(){
+const text=`${coupleName}: ${totalScore}/50 ${getFireEmoji(totalScore)}`;
+navigator.clipboard.writeText(text).then(()=>alert('הועתק! 📋')).catch(()=>{prompt('העתיקו:',text)})
+}
+
+function goToLeaderboard(){
+showScreen('leaderboard');switchTab('my');renderMyScore();renderLeaderboard()
+}
+
+function switchTab(tab){
+document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',tab==='my'?i===0:i===1));
+document.getElementById('tabMy').classList.toggle('hidden',tab!=='my');
+document.getElementById('tabFull').classList.toggle('hidden',tab!=='full');
+if(tab==='full')renderLeaderboard()
+}
+
+function renderMyScore(){
+const d=document.getElementById('myScoreDisplay');
+d.innerHTML=`<div style="font-size:1.3em;margin-bottom:10px">${coupleName}</div>
+<div style="font-size:2em">${getFireEmoji(totalScore)} ${totalScore}/50</div>
+<div class="flame-meter"><div class="flame-fill" style="width:${totalScore/50*100}%"></div></div>
+<div style="color:#c9a0ff;margin-top:10px">${getScoreText(totalScore)}</div>`
+}
+
+function getCouples(){return JSON.parse(localStorage.getItem('hotCouples')||'[]')}
+function saveCouples(c){localStorage.setItem('hotCouples',JSON.stringify(c))}
+
+function addCouple(){
+const n=document.getElementById('addName').value.trim();
+const s=parseInt(document.getElementById('addScore').value);
+if(!n||isNaN(s)||s<0||s>50)return;
+const couples=getCouples();
+const idx=couples.findIndex(c=>c.name===n);
+if(idx>=0)couples[idx].score=s;else couples.push({name:n,score:s});
+saveCouples(couples);
+document.getElementById('addName').value='';document.getElementById('addScore').value='';
+renderLeaderboard()
+}
+
+function ensureSelfInList(){
+if(!coupleName)return;
+const couples=getCouples();
+const idx=couples.findIndex(c=>c.name===coupleName);
+if(idx>=0)couples[idx].score=totalScore;else couples.push({name:coupleName,score:totalScore});
+saveCouples(couples)
+}
+
+function renderLeaderboard(){
+ensureSelfInList();
+const couples=getCouples().sort((a,b)=>b.score-a.score);
+const medals=['🥇','🥈','🥉'];
+const list=document.getElementById('leaderboardList');
+list.innerHTML=couples.map((c,i)=>{
+const pct=c.score/50*100;
+return`<div class="lb-entry">
+<span class="lb-rank">${medals[i]||i+1}</span>
+<span class="lb-name">${c.name}</span>
+<span class="lb-fire">${getFireEmoji(c.score)}</span>
+<span class="lb-score">${c.score}/50</span>
+</div>`
+}).join('');
+if(couples.length&&couples[0].name===coupleName){
+list.insertAdjacentHTML('beforebegin','<div class="crown-msg" id="crownMsg">הזוג הכי חם במסיבה! 👑🔥</div>')
+}
+const old=document.querySelectorAll('#crownMsg');if(old.length>1)old[0].remove()
+}
+
+function resetGame(){showScreen('welcome');document.getElementById('coupleName').value='';coupleName='';totalScore=0;currentQ=0}
+
+// Confetti
+(function(){const c=document.getElementById('confetti');const colors=['#ff6b9d','#c44dff','#ffb347','#00d4ff','#ffd700'];
+for(let i=0;i<40;i++){const s=document.createElement('span');s.style.left=Math.random()*100+'%';s.style.background=colors[i%colors.length];s.style.animationDuration=(4+Math.random()*6)+'s';s.style.animationDelay=Math.random()*10+'s';s.style.width=s.style.height=(4+Math.random()*6)+'px';c.appendChild(s)}})();
 </script>
 </body>
 </html>

@@ -259,7 +259,7 @@ list.insertAdjacentHTML('beforebegin','<div class="crown-msg" id="crownMsg">הז
 const old=document.querySelectorAll('#crownMsg');if(old.length>1)old[0].remove()
 }
 
-function resetGame(){showScreen('welcome');document.getElementById('coupleName').value='';coupleName='';totalScore=0;currentQ=0}
+function resetGame(){localStorage.removeItem("hotCouple");localStorage.removeItem("hotCouples");showScreen("welcome");document.getElementById("coupleName").value="";coupleName="";totalScore=0;currentQ=0}
 
 // Confetti
 (function(){const c=document.getElementById('confetti');const colors=['#ff6b9d','#c44dff','#ffb347','#00d4ff','#ffd700'];

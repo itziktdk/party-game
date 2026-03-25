@@ -93,9 +93,15 @@ input::placeholder{color:rgba(255,255,255,0.4)}
 <!-- Welcome -->
 <div class="screen active" id="welcome">
 <h1>🎉 מי מכיר את מי?<br>— מהדורת זוגות 🔥</h1>
-<p class="subtitle">משחק חברה לזוגות</p>
-<input type="text" id="nameInput" placeholder="מה השם שלכם? (למשל: איציק ונטלי)">
+<p class="subtitle">משחק חברה לזוגות • מפעיל אחד מנהל 🎤</p>
+<input type="text" id="nameInput" placeholder="שם הזוג שלכם (למשל: איציק ונטלי)">
 <button class="btn btn-pink btn-big" onclick="startGame()">בואו נשחק! 🎮</button>
+<div class="instructions" style="margin-top:20px;font-size:0.9rem">
+📱 מפעיל אחד פותח את הלינק<br>
+🎤 מציג שאלות לכל הזוגות<br>
+✅ לוחץ "תואם" / "לא תואם" לכל זוג<br>
+🏆 בסוף — מי שצבר הכי הרבה ניצח!
+</div>
 <div class="party-emojis">🥂 💃 🕺 🎊 🍾 🔥</div>
 </div>
 
@@ -104,7 +110,7 @@ input::placeholder{color:rgba(255,255,255,0.4)}
 <h2 id="hubGreeting"></h2>
 <div class="score-display">ניקוד: <span class="score-num" id="hubScore">0</span></div>
 <div class="cards">
-<div class="card" onclick="startRound(1)"><div class="card-emoji">🫣</div><div class="card-title">מה הם היו אומרים?</div><div class="card-desc">שבו גב אל גב וענו — תואם?</div><div class="card-pts">עד 18 נקודות</div></div>
+<div class="card" onclick="startRound(1)"><div class="card-emoji">🫣</div><div class="card-title">מה הם היו אומרים?</div><div class="card-desc">קראו שאלה — הזוג עונה ביחד — תואם?</div><div class="card-pts">עד 18 נקודות</div></div>
 <div class="card" onclick="startRound(2)"><div class="card-emoji">🗣️</div><div class="card-title">תגיד בלי לגעת!</div><div class="card-desc">הסבירו מילה בלי להגיד אותה</div><div class="card-pts">עד 12 נקודות</div></div>
 <div class="card" onclick="startRound(3)"><div class="card-emoji">🤥</div><div class="card-title">אמת או שקר זוגי</div><div class="card-desc">2 אמיתות ושקר אחד — מצאו!</div><div class="card-pts">2 נקודות לניחוש</div></div>
 <div class="card" onclick="startRound(4)"><div class="card-emoji">🗳️</div><div class="card-title">הצבעת הקהל</div><div class="card-desc">כולם מצביעים — זה אתם?</div><div class="card-pts">עד 15 נקודות</div></div>
@@ -115,7 +121,7 @@ input::placeholder{color:rgba(255,255,255,0.4)}
 <!-- Round 1 -->
 <div class="screen" id="round1">
 <h2>🫣 מה הם היו אומרים?</h2>
-<div class="instructions">שבו גב אל גב. כל אחד כותב תשובה.<br>אם תואם = 3 נקודות! 🎯</div>
+<div class="instructions">🎤 קראו את השאלה בקול לכל הזוגות!<br>כל זוג עונה ביחד — אם שניהם ענו אותו דבר = תואם! 🎯</div>
 <div class="q-counter" id="r1counter"></div>
 <div class="question-box" id="r1question"></div>
 <div class="btn-row">

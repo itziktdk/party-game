@@ -101,38 +101,33 @@ input:focus{border-color:#ff6b9d;box-shadow:0 0 20px rgba(255,107,157,.3)}
 <!-- Screen 5: Leaderboard -->
 <div class="screen" id="leaderboard">
 <h1>🏆 טבלת הזוגות הכי חמים 🔥</h1>
-<div class="tabs">
-<div class="tab active" onclick="switchTab('my')">הניקוד שלי</div>
-<div class="tab" onclick="switchTab('full')">טבלה מלאה</div>
-</div>
-<div id="tabMy">
 <div class="my-score-display" id="myScoreDisplay"></div>
-<p class="subtitle">הראו את המסך לכולם! 📱</p>
-<button class="btn btn-secondary btn-small" onclick="copyResult()">📋 העתק תוצאה</button>
-</div>
-<div id="tabFull" class="hidden">
+<p class="subtitle" style="margin:5px 0 15px">➕ הוסיפו את שאר הזוגות לטבלה:</p>
 <div class="add-couple-form">
 <input type="text" id="addName" placeholder="שם הזוג">
 <input type="number" id="addScore" placeholder="ניקוד" min="0" max="50" style="max-width:80px">
 <button class="btn btn-small" onclick="addCouple()">➕</button>
 </div>
 <div class="leaderboard" id="leaderboardList"></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px">
+<button class="btn btn-secondary btn-small" onclick="copyResult()">📋 העתק תוצאה</button>
+<button class="btn btn-secondary btn-small" onclick="resetGame()">🔄 אפס הכל</button>
+<button class="btn btn-secondary btn-small" onclick="playAgain()">🔥 שחק שוב</button>
 </div>
-<button class="btn btn-secondary" onclick="resetGame()" style="margin-top:20px">חזרה להתחלה 🔄</button>
 </div>
 
 <script>
 const questions=[
-{q:'כמה פעמים בשבוע אתם...? 😏',a:[{t:'בחלומות 😴',s:1},{t:'פעם, אם יש מצב רוח',s:2},{t:'2-3, כמו שצריך 💪',s:4},{t:'כל יום, אנחנו חיות 🔥',s:5}]},
-{q:'מי שוטף כלים בבית?',a:[{t:'הוא — ורק אחרי שצועקים עליו 😤',s:2},{t:'היא — כי הוא "לא רואה" אותם',s:2},{t:'ביחד! (כן, באמת)',s:5},{t:'יש מדיח, מה אנחנו פראיירים?',s:3}]},
-{q:'מה עשיתם בדייט האחרון?',a:[{t:'מה זה דייט? 🤔',s:1},{t:'נטפליקס על הספה (קלאסי)',s:2},{t:'יצאנו למסעדה כמו בני אדם',s:4},{t:'דברים שלא מספרים בפגישות הורים 😈',s:5}]},
-{q:'כמה זמן לוקח לכם ריב ממוצע?',a:[{t:'אנחנו עדיין באמצע ריב מלפני שבוע',s:1},{t:'יום-יומיים של שקט עוין 🥶',s:2},{t:'כמה שעות ומתפייסים',s:4},{t:'חמש דקות ואז... מתפייסים 😏',s:5}]},
-{q:'מה הסוד לזוגיות מוצלחת?',a:[{t:'לא לדבר יותר מדי 🤐',s:1},{t:'ארוחות טובות וסדרות',s:2},{t:'הומור ואקשן 😂🔥',s:4},{t:'אין סוד, פשוט שורדים 💀',s:3}]},
-{q:'איפה המקום הכי מוזר שעשיתם...? 🙈',a:[{t:'רק במיטה, אנחנו שמרנים',s:1},{t:'בסלון אחרי שהילדים נרדמו',s:3},{t:'במכונית / חוף / מלון',s:4},{t:'אם נספר, נעצרו אותנו 👮',s:5}]},
-{q:'מה קורה כשאחד מכם אומר "כאב ראש"?',a:[{t:'אז כאב לו/לה ראש, מה... 🤷',s:1},{t:'יודעים שזה קוד ל"לא בא לי"',s:3},{t:'עיסוי ראש ואז... 💆😏',s:5},{t:'לא קיים, תמיד בא לנו',s:5}]},
-{q:'כמה פעמים ביום אתם שולחים הודעות אחד לשני?',a:[{t:'רק "קנה חלב" ו"מתי בבית"',s:1},{t:'כמה פעמים, הרגיל',s:2},{t:'כל הזמן, גם אמוג\'ים לבביים ❤️',s:4},{t:'שולחים דברים שמוחקים מיד 🫣',s:5}]},
-{q:'מי שולט בשלט הטלוויזיה?',a:[{t:'הוא — ולא מוותר 😤',s:2},{t:'היא — כי יש לה טעם יותר טוב',s:2},{t:'מתחלפים כמו בני אדם',s:3},{t:'אין לנו זמן לטלוויזיה... 😈',s:5}]},
-{q:'אם הייתם יכולים לשנות דבר אחד בבן/בת הזוג?',a:[{t:'הנחירות. בבקשה. 😩',s:2},{t:'שיעזור/תעזור יותר בבית!',s:2},{t:'שום דבר, הם מושלמים (חייבים להגיד את זה כי הם ליד) 😇',s:3},{t:'דבר אחד?! יש לי רשימה! 📝',s:4}]}
+{q:'מה הדבר הראשון שבן/בת הזוג עושה בבוקר? 🌅',a:[{t:'בודק/ת טלפון לפני שפוקחים עיניים 📱',s:2},{t:'קפה. בלי קפה לא מדברים 😤',s:3},{t:'מתחבק/ת ואז קם/ה',s:5},{t:'צועק/ת על הילדים שיקומו',s:2}]},
+{q:'מה הביטוי שהכי חוזר בבית שלכם? 🏠',a:[{t:'מי שם את זה פה?!',s:2},{t:'תעזור/י לי רגע!',s:2},{t:'בוא/י ארגיז אותי פחות',s:3},{t:'יאללה לישון... (ואז לא ישנים 😏)',s:5}]},
+{q:'מה קורה כשאתם נוסעים יחד באוטו? 🚗',a:[{t:'ריב על ניווט ומי נהג יותר טוב 😤',s:2},{t:'רדיו — ומתווכחים על תחנה',s:2},{t:'מנגנים ושרים ביחד 🎵',s:4},{t:'יד על הברך ונהנים מהדרך 😏',s:5}]},
+{q:'מי מכם נרדם ראשון בלילה? 😴',a:[{t:'הוא — 30 שניות ונוחר',s:2},{t:'היא — ואז הוא גונב שמיכה',s:2},{t:'ביחד, כמו תינוקות',s:4},{t:'אף אחד לא ישן מוקדם... 🔥',s:5}]},
+{q:'מה הייתם עושים עם ערב חופשי בלי ילדים? 🌙',a:[{t:'ישנים. פשוט ישנים 😴',s:1},{t:'מסעדה ויין כמו פעם',s:3},{t:'סרט, פופקורן וספה',s:2},{t:'לא צריך לפרט 😈🔥',s:5}]},
+{q:'מה הדבר שלעולם לא תודו בו בקול? 🤫',a:[{t:'שאנחנו אוהבים לריב קצת',s:3},{t:'שאנחנו לובשים את הבגדים של השני',s:2},{t:'שאנחנו עדיין מתרגשים אחד מהשני 🥰',s:5},{t:'שיש לנו סיסמאות לטלפון של השני',s:3}]},
+{q:'מה קורה בסופר כשאתם קונים ביחד? 🛒',a:[{t:'ריב על כל מוצר שנכנס לעגלה',s:2},{t:'הוא נעלם למדף החטיפים 🍫',s:2},{t:'קונים ביחד, צוות מנצח! 💪',s:4},{t:'נגמר בנשיקה בין המדפים 😏',s:5}]},
+{q:'איך בן/בת הזוג מנסה לרצות אתכם? 💝',a:[{t:'מביא/ה אוכל — הדרך ללב דרך הקיבה',s:3},{t:'פתאום עושה מטלות בבית 🧹',s:3},{t:'מגיע/ה עם מתנה הפתעה',s:4},{t:'תנועה מסוימת שעובדת תמיד... 😏',s:5}]},
+{q:'מה קורה כשמישהו שולח הודעה חשודה לבן/בת הזוג? 📱',a:[{t:'חקירה ברמת שב"כ 🔍',s:2},{t:'סומכים לגמרי, אפילו לא שואלים',s:4},{t:'מציצים מהצד בלי שישימו לב 👀',s:3},{t:'לא איכפת, אנחנו בטוחים בקשר 😎',s:5}]},
+{q:'מה עדיף: צודק או שלום בית? ✌️',a:[{t:'צודק. תמיד צודק. 😤',s:1},{t:'שלום בית — לא שווה את הריב',s:3},{t:'שלום בית + להיות צודק בשקט 🤫',s:4},{t:'מי צריך שלום כשיש אש? 🔥😂',s:5}]}
 ];
 
 let currentQ=0,totalScore=0,coupleName='';
@@ -198,14 +193,11 @@ navigator.clipboard.writeText(text).then(()=>alert('הועתק! 📋')).catch(()
 }
 
 function goToLeaderboard(){
-showScreen('leaderboard');switchTab('my');renderMyScore();renderLeaderboard()
+showScreen('leaderboard');renderMyScore();ensureSelfInList();renderLeaderboard()
 }
 
-function switchTab(tab){
-document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',tab==='my'?i===0:i===1));
-document.getElementById('tabMy').classList.toggle('hidden',tab!=='my');
-document.getElementById('tabFull').classList.toggle('hidden',tab!=='full');
-if(tab==='full')renderLeaderboard()
+function playAgain(){
+currentQ=0;totalScore=0;showScreen('welcome');document.getElementById('coupleName').value=''
 }
 
 function renderMyScore(){
